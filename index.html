@@ -1,0 +1,552 @@
+```html
+<!DOCTYPE html>
+<html lang="en" ng-app="photoApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lens Craft Photography</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f1eb;
+            color: #333;
+        }
+
+        header {
+            background: #171717;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        header h1 {
+            color: #e8bd65;
+            margin: 0;
+            font-size: 35px;
+        }
+
+        nav {
+            background: #292929;
+            text-align: center;
+            padding: 16px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #e8bd65;
+        }
+
+        .container {
+            max-width: 950px;
+            min-height: 400px;
+            margin: 30px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px #ccc;
+        }
+
+        h2 {
+            text-align: center;
+            color: #a47724;
+        }
+
+        h3 {
+            color: #6f5221;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .hero {
+            background: #eee5d5;
+            padding: 40px 15px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .hero .camera {
+            font-size: 80px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 18px;
+        }
+
+        .photo-card {
+            background: #f7f3eb;
+            text-align: center;
+            padding: 25px 10px;
+            border-radius: 10px;
+            border: 1px solid #e3d6bd;
+        }
+
+        .photo-card .emoji {
+            font-size: 50px;
+        }
+
+        .photo-card:hover {
+            background: #eee1c8;
+            transform: translateY(-3px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 13px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background: #292929;
+            color: white;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 11px;
+            margin: 7px 0;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        button {
+            background: #a47724;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            margin-top: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #795719;
+        }
+
+        button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .success {
+            color: green;
+            background: #e9f7e9;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .service-card {
+            padding: 15px;
+            margin: 12px 0;
+            background: #f7f3eb;
+            border-left: 5px solid #a47724;
+        }
+
+        footer {
+            background: #171717;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer span {
+            color: #e8bd65;
+        }
+
+        @media (max-width: 600px) {
+            nav a {
+                display: inline-block;
+                padding: 8px;
+            }
+
+            .container {
+                margin: 15px;
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Lens Craft Photography</h1>
+        <p>Capturing Moments, Creating Memories</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#!/">Home</a>
+        <a href="#!/gallery">Gallery</a>
+        <a href="#!/services">Services</a>
+        <a href="#!/contact">Contact</a>
+        <a href="#!/register">Register</a>
+    </nav>
+
+    <!-- Dynamic Page Content -->
+    <div class="container" ng-view></div>
+
+    <!-- Home Page -->
+    <script type="text/ng-template" id="home.html">
+        <div class="hero">
+            <div class="camera">📸</div>
+            <h2>Welcome to Lens Craft Photography</h2>
+            <h3>Every Picture Tells a Story</h3>
+            <p>
+                We capture your beautiful moments with creativity and passion.
+                From weddings and portraits to nature and special events,
+                we turn your memories into timeless photographs.
+            </p>
+            <a href="#!/gallery">
+                <button>Explore Our Gallery</button>
+            </a>
+        </div>
+
+        <h2>Why Choose Us?</h2>
+        <div class="gallery">
+            <div class="photo-card">
+                <div class="emoji">📷</div>
+                <h3>Professional Quality</h3>
+                <p>Creative photography for every occasion.</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="emoji">✨</div>
+                <h3>Creative Editing</h3>
+                <p>Beautiful images with careful editing.</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="emoji">❤️</div>
+                <h3>Special Memories</h3>
+                <p>Preserving your memorable moments.</p>
+            </div>
+        </div>
+    </script>
+
+    <!-- Gallery Page -->
+    <script type="text/ng-template" id="gallery.html">
+        <h2>Our Photography Gallery</h2>
+        <p class="center">Explore our different photography categories.</p>
+
+        <div class="gallery">
+            <div class="photo-card">
+                <div class="emoji">🌄</div>
+                <h3>Landscape</h3>
+                <p>Beautiful mountains and nature.</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="emoji">🧑</div>
+                <h3>Portrait</h3>
+                <p>Creative individual portraits.</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="emoji">💍</div>
+                <h3>Wedding</h3>
+                <p>Memorable wedding moments.</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="emoji">🐦</div>
+                <h3>Wildlife</h3>
+                <p>Animals and birds in nature.</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="emoji">🌆</div>
+                <h3>Street</h3>
+                <p>Everyday life and city scenes.</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="emoji">🎉</div>
+                <h3>Events</h3>
+                <p>Celebrations and special occasions.</p>
+            </div>
+        </div>
+    </script>
+
+    <!-- Services Page -->
+    <script type="text/ng-template" id="services.html">
+        <h2>Our Photography Services</h2>
+
+        <div class="service-card">
+            <h3>📸 Portrait Photography</h3>
+            <p>Professional portraits for individuals and families.</p>
+            <strong>Starting at Rs. 1,500</strong>
+        </div>
+
+        <div class="service-card">
+            <h3>💍 Wedding Photography</h3>
+            <p>Capture the beautiful moments of your wedding.</p>
+            <strong>Starting at Rs. 10,000</strong>
+        </div>
+
+        <div class="service-card">
+            <h3>🎉 Event Photography</h3>
+            <p>Photography for birthdays and special occasions.</p>
+            <strong>Starting at Rs. 5,000</strong>
+        </div>
+
+        <div class="service-card">
+            <h3>🛍️ Product Photography</h3>
+            <p>Creative product photographs for businesses.</p>
+            <strong>Starting at Rs. 2,500</strong>
+        </div>
+
+        <p class="center">
+            <a href="#!/register">
+                <button>Register for a Session</button>
+            </a>
+        </p>
+    </script>
+
+    <!-- Contact Page -->
+    <script type="text/ng-template" id="contact.html">
+        <h2>Contact Us</h2>
+
+        <div class="center">
+            <h3>Lens Craft Photography Studio</h3>
+            <p>📍 Coimbatore, Tamil Nadu</p>
+            <p>📞 +91 98765 43210</p>
+            <p>✉ lenscraft@example.com</p>
+            <p>Monday - Saturday: 9:00 AM to 6:00 PM</p>
+            <p>Contact us to discuss your photography requirements.</p>
+
+            <a href="#!/register">
+                <button>Book a Photography Session</button>
+            </a>
+        </div>
+    </script>
+
+    <!-- Registration Form Page -->
+    <script type="text/ng-template" id="register.html">
+        <h2>Photography Registration Form</h2>
+        <p class="center">Enter your details to register for a photography session.</p>
+
+        <form name="f" novalidate>
+
+            <label>Full Name *</label>
+            <input type="text" name="name"
+                   ng-model="user.name"
+                   ng-pattern="/^[a-zA-Z ]+$/"
+                   required>
+
+            <span class="error"
+                  ng-show="f.name.$touched && f.name.$error.required">
+                Name is required.
+            </span>
+
+            <span class="error"
+                  ng-show="f.name.$touched && f.name.$error.pattern">
+                Name should contain letters only.
+            </span>
+
+            <label>Password *</label>
+            <input type="password" name="password"
+                   ng-model="user.password"
+                   ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/"
+                   required>
+
+            <span class="error"
+                  ng-show="f.password.$touched && f.password.$error.required">
+                Password is required.
+            </span>
+
+            <span class="error"
+                  ng-show="f.password.$touched && f.password.$error.pattern">
+                Use at least 8 characters with uppercase, lowercase and a number.
+            </span>
+
+            <label>Age *</label>
+            <input type="number" name="age"
+                   ng-model="user.age"
+                   min="18" max="60" required>
+
+            <span class="error"
+                  ng-show="f.age.$touched && f.age.$error.required">
+                Age is required.
+            </span>
+
+            <span class="error"
+                  ng-show="f.age.$touched && (f.age.$error.min || f.age.$error.max)">
+                Age must be between 18 and 60.
+            </span>
+
+            <label>Mobile Number *</label>
+            <input type="text" name="mobile"
+                   ng-model="user.mobile"
+                   ng-pattern="/^[0-9]{10}$/"
+                   required>
+
+            <span class="error"
+                  ng-show="f.mobile.$touched && f.mobile.$error.required">
+                Mobile number is required.
+            </span>
+
+            <span class="error"
+                  ng-show="f.mobile.$touched && f.mobile.$error.pattern">
+                Enter a valid 10-digit mobile number.
+            </span>
+
+            <label>Email Address *</label>
+            <input type="email" name="email"
+                   ng-model="user.email" required>
+
+            <span class="error"
+                  ng-show="f.email.$touched && f.email.$error.required">
+                Email is required.
+            </span>
+
+            <span class="error"
+                  ng-show="f.email.$touched && f.email.$error.email">
+                Enter a valid email address.
+            </span>
+
+            <label>Gender *</label>
+            <div>
+                <label>
+                    <input style="width:auto" type="radio"
+                           name="gender" ng-model="user.gender"
+                           value="Male" required>
+                    Male
+                </label>
+
+                <label>
+                    <input style="width:auto" type="radio"
+                           name="gender" ng-model="user.gender"
+                           value="Female" required>
+                    Female
+                </label>
+
+                <label>
+                    <input style="width:auto" type="radio"
+                           name="gender" ng-model="user.gender"
+                           value="Other" required>
+                    Other
+                </label>
+            </div>
+
+            <span class="error"
+                  ng-show="f.gender.$touched && f.gender.$error.required">
+                Please select your gender.
+            </span>
+
+            <label>Photography Interest *</label>
+            <select name="interest" ng-model="user.interest" required>
+                <option value="">-- Select Interest --</option>
+                <option>Portrait Photography</option>
+                <option>Wedding Photography</option>
+                <option>Landscape Photography</option>
+                <option>Wildlife Photography</option>
+                <option>Event Photography</option>
+            </select>
+
+            <span class="error"
+                  ng-show="f.interest.$touched && f.interest.$error.required">
+                Please select a photography interest.
+            </span>
+
+            <div class="center">
+                <button type="button"
+                        ng-disabled="f.$invalid"
+                        ng-click="registered = true">
+                    Submit Registration
+                </button>
+            </div>
+
+            <div class="success"
+                 ng-show="registered">
+                Registration Successful! Welcome, {{user.name}}.
+                Your photography interest is {{user.interest}}.
+            </div>
+
+        </form>
+    </script>
+
+    <!-- AngularJS Routing -->
+    <script>
+        var app = angular.module("photoApp", ["ngRoute"]);
+
+        app.config(function($routeProvider) {
+            $routeProvider
+                .when("/", {
+                    templateUrl: "home.html"
+                })
+                .when("/gallery", {
+                    templateUrl: "gallery.html"
+                })
+                .when("/services", {
+                    templateUrl: "services.html"
+                })
+                .when("/contact", {
+                    templateUrl: "contact.html"
+                })
+                .when("/register", {
+                    templateUrl: "register.html",
+                    controller: "RegisterController"
+                })
+                .otherwise({
+                    redirectTo: "/"
+                });
+        });
+
+        app.controller("RegisterController", function($scope) {
+            $scope.user = {};
+            $scope.registered = false;
+        });
+    </script>
+
+</body>
+</html>
+```
